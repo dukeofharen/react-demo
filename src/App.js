@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FactButton from './FactButton';
+import Fact from './Fact';
+import FavButton from './FavButton';
+import Favourites from './Favourites';
 
-class App extends Component {
+class App extends React.Component {
+  state = {
+    fact: { id: 0, fact: '' },
+    favourites: []
+  };
+
+  setFact = (fact) => {
+    this.setState(prevState => ({
+     fact: fact
+    }));
+  };
+
+  addFav = (fact) => {
+    this.setState(prevState => ({
+     favourites: prevState.favourites.concat(fact)
+    }));
+  };
+
   render() {
     return (
       <div className="App">
@@ -10,12 +31,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          Welkom bij de Quintor React.js (mini)-masterclass. Je kunt dit template gebruiken om van start te gaan met React.js.
-        </p>
+        <FactButton onSubmit={this.setFact} />
+        <Fact fact={this.state.fact} />
+        <FavButton fact={this.state.fact} onSubmit={this.addFav} />
+        <Favourites favourites={this.state.favourites} />
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;
